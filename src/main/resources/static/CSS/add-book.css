@@ -1,0 +1,255 @@
+/* ===== ANIMATION KEYFRAMES ===== */
+@keyframes fadeSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes inputAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===== BODY STYLING ===== */
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: #6a6f8c;
+    font: 600 16px/18px 'Open Sans', sans-serif;
+    background: linear-gradient(to right, #2c3e50, #3498db);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 40px;
+}
+
+/* ===== GENERAL RESET ===== */
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+.clearfix:after, .clearfix:before {
+    content: '';
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: fadeSlideIn 1s ease forwards;
+}
+
+/* ===== HEADER STYLING ===== */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 40px;
+    color: #4e73df;
+    margin-bottom: 10px;
+    animation: fadeSlideIn 1s ease forwards;
+}
+
+header h2 {
+    font-size: 22px;
+    color: #555;
+}
+
+/* ===== FORM STYLE ===== */
+.book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeSlideIn 1s ease forwards;
+}
+
+/* ===== INPUT FIELD ANIMATION ===== */
+.book-form .group {
+    margin-bottom: 15px;
+    animation: inputAppear 0.5s ease both;
+}
+
+.book-form .group:nth-child(1) { animation-delay: 0.3s; }
+.book-form .group:nth-child(2) { animation-delay: 0.4s; }
+.book-form .group:nth-child(3) { animation-delay: 0.5s; }
+.book-form .group:nth-child(4) { animation-delay: 0.6s; }
+
+/* ===== LABELS & INPUTS ===== */
+.book-form label {
+    font-size: 16px;
+    color: #555;
+    font-weight: 600;
+}
+
+.book-form input {
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.book-form input:focus {
+    border-color: #4e73df;
+    box-shadow: 0 0 10px rgba(78, 115, 223, 0.2);
+}
+
+/* ===== BUTTON STYLING ===== */
+.book-form button {
+    padding: 12px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #4e73df;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.book-form button:hover {
+    background-color: #2e59d9;
+}
+
+.book-form .form-actions button:nth-child(2) {
+    background-color: #f44336;
+    margin-left: 10px;
+}
+
+.book-form .form-actions button:nth-child(2):hover {
+    background-color: #d32f2f;
+}
+
+/* ===== TABLE STYLE ===== */
+.book-list {
+    margin-top: 40px;
+}
+
+.book-list h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.book-list table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.book-list th, .book-list td {
+    padding: 15px 20px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.book-list th {
+    background-color: #4e73df;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.book-list td {
+    background-color: #f9f9fb;
+    color: #555;
+}
+
+.book-list tr:hover td {
+    background-color: #f1f1f1;
+}
+
+.book-list tbody tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+.book-list tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.book-list button {
+    padding: 8px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #4e73df;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+.book-list button:hover {
+    background-color: #2e59d9;
+}
+
+.book-list button:active {
+    background-color: #1e3a8a;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 30px;
+    }
+
+    header h2 {
+        font-size: 18px;
+    }
+
+    .book-form label {
+        font-size: 14px;
+    }
+
+    .book-form input,
+    .book-form button {
+        font-size: 14px;
+    }
+
+    .book-list table th, .book-list table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+}

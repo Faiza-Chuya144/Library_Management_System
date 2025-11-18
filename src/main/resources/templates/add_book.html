@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management - Add/Edit and Book List</title>
+    <link rel="stylesheet" th:href="@{/css/add-book.css}">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Add/Edit Book</h1>
+        <h2>Manage your library effectively</h2>
+    </header>
+
+    <!-- Form for Adding/Editing Book -->
+    <form th:action="@{/books/save}" method="post" class="book-form">
+        <input type="hidden" name="id" th:value="${book.id}" />
+
+        <label for="title">Book Title</label>
+        <input type="text" id="title" name="title" th:value="${book.title}" placeholder="Enter book title" required>
+
+        <label for="authors">Authors (comma separated)</label>
+        <input type="text" id="authors" name="authors" th:value="${book.authors}" placeholder="Enter authors" required>
+
+        <label for="isbn">ISBN</label>
+        <input type="text" id="isbn" name="isbn" th:value="${book.isbn}" placeholder="Enter ISBN" required>
+
+        <label for="copies">Number of Copies</label>
+        <input type="number" id="copies" name="copies" th:value="${book.copies}" placeholder="Enter number of copies" required>
+
+        <div class="form-actions">
+            <button type="submit">Save Book</button>
+            <button type="reset">Clear Fields</button>
+        </div>
+    </form>
+
+    <!-- Book List Table -->
+    <div class="book-list">
+        <h2>All Books</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Authors</th>
+                <th>ISBN</th>
+                <th>Copies</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.authors}"></td>
+                <td th:text="${book.isbn}"></td>
+                <td th:text="${book.copies}"></td>
+                <td class="actions">
+                    <form th:action="@{/books/edit}" method="post" style="display:inline;">
+                        <input type="hidden" name="id" th:value="${book.id}" />
+                        <button type="submit">Edit</button>
+                    </form>
+                    <form th:action="@{/books/delete}" method="post" style="display:inline;">
+                        <input type="hidden" name="id" th:value="${book.id}" />
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this book?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

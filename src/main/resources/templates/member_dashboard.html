@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Dashboard</title>
+    <link rel="stylesheet" href="/css/member-dashboard.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Welcome to the Member Dashboard</h1>
+        <p>Here are the books available in the library:</p>
+    </div>
+
+    <div class="book-info">
+        <p class="total-books">Total Books: <span th:text="${bookCount}"></span></p>
+
+        <table class="book-table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Authors</th>
+                <th>ISBN</th>
+                <th>Available Copies</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.authors}"></td>
+                <td th:text="${book.isbn}"></td>
+                <td th:text="${book.copies}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="actions">
+        <a href="/" class="btn">Exit</a>
+    </div>
+</div>
+</body>
+</html>

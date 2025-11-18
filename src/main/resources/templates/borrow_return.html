@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Borrow & Return Books</title>
+    <link rel="stylesheet" th:href="@{/css/borrow_return.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Library Book Management</h1>
+        <h2>Borrow & Return System</h2>
+    </header>
+
+    <!-- Messages -->
+    <div th:if="${successMessage}" class="alert success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert error" th:text="${errorMessage}"></div>
+
+    <div class="content">
+        <!-- Borrow Section -->
+        <section class="card">
+            <h2>Borrow a Book</h2>
+            <form th:action="@{/borrow-return}" method="post">
+                <input type="hidden" name="actionType" value="borrow"/>
+
+                <div class="form-group">
+                    <label for="userEmail">Member Email</label>
+                    <select name="userEmail" id="userEmail" required>
+                        <option value="">-- Select Member --</option>
+                        <option th:each="user : ${users}"
+                                th:value="${user.emailAddress}"
+                                th:text="${user.emailAddress}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="bookId">Book</label>
+                    <select name="bookId" id="bookId" required>
+                        <option value="">-- Select Book --</option>
+                        <option th:each="book : ${books}"
+                                th:if="${book.copies > 0}"
+                                th:value="${book.id}"
+                                th:text="${book.title + ' (' + book.copies + ' available)'}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dueDate">Due Date</label>
+                    <input type="date" name="dueDate" id="dueDate" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn primary">Borrow Book</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Return Section -->
+        <section class="card">
+            <h2>Return a Book</h2>
+            <form th:action="@{/borrow-return}" method="post">
+                <input type="hidden" name="actionType" value="return"/>
+
+                <div class="form-group">
+                    <label for="recordId">Borrow Record</label>
+                    <select name="recordId" id="recordId" required>
+                        <option value="">-- Select Record --</option>
+                        <option th:each="record : ${borrowRecords}"
+                                th:value="${record.id}"
+                                th:text="${record.userEmail + ' - ' + record.book.title + ' (Borrowed: ' + record.borrowDate + ')'}">
+                        </option>
+                    </select>
+                </div>
+
+                <div th:if="${selectedRecord}" class="fine-info">
+                    <p><strong>Book:</strong> <span th:text="${selectedRecord.book.title}"></span></p>
+                    <p><strong>Borrow Date:</strong> <span th:text="${selectedRecord.borrowDate}"></span></p>
+                    <p><strong>Due Date:</strong>
+                        <span th:text="${selectedRecord.borrowDate.plusDays(7)}"></span> <!-- Generate Due Date -->
+                    </p>
+                    <p><strong>Days Borrowed:</strong>
+                        <span th:text="${#temporals.daysBetween(selectedRecord.borrowDate, T(java.time.LocalDate).now())}"></span>
+                    </p>
+                    <p><strong>Late Fine:</strong>
+                        ₹<span th:text="${calculatedFine}"></span>
+                    </p>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn success">Return Book</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Borrowed Books Table -->
+        <section class="card">
+            <h2>Current Borrow Records</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Member</th>
+                        <th>Book</th>
+                        <th>Borrow Date</th>
+                        <th>Due Date</th> <!-- Corrected -->
+                        <th>Status</th>
+                        <th>Fine</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="record : ${borrowRecords}">
+                        <td th:text="${record.userEmail}"></td>
+                        <td th:text="${record.book.title}"></td>
+                        <td th:text="${record.borrowDate}"></td>
+                        <td th:text="${record.borrowDate.plusDays(7)}"></td> <!-- Generate Due Date -->
+                        <td>
+                            <span th:if="${record.returned}" class="status returned">Returned</span>
+                            <span th:unless="${record.returned}" class="status borrowed">Borrowed</span>
+                        </td>
+                        <td>
+                            <span th:if="${record.lateFine != null}">
+                                ₹<span th:text="${record.lateFine}"></span>
+                            </span>
+                            <span th:unless="${record.lateFine != null}">
+                                -
+                            </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>
